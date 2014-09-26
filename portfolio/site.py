@@ -6,9 +6,9 @@ from flask.ext.mako import MakoTemplates, render_template
 from markdown2 import Markdown
 
 app = Flask(__name__)
-app.template_folder = "templates"
+app.template_folder = "content/templates"
 mako = MakoTemplates(app)
-base_dir = os.path.split(__file__)[0] + '/'
+base_dir = os.path.split(__file__)[0] + '/content/'
 
 markdownGen = Markdown()
 
@@ -23,8 +23,11 @@ def index_page(page):
     with open(base_dir + "index.md", "r") as indexMD:
         body = indexMD.read()
 
-    body += "\n\n##Project List\n\n"
     
+    # Append projects in markdown
+
+    body += "\n\n##Project List\n\n"
+
     for project in project_list():
         if 'projects' not in page:
 	    projectURL = 'projects/' + project
