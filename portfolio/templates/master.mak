@@ -7,6 +7,7 @@
     <body>
         ${body}
 	<footer>
+	    <a href="/">Home</a> <br/>
 	    &copy; 2014 Liam Middlebrook <br/> 
 	    <em>This website was generated using Python with Flask</em>
 	</footer>

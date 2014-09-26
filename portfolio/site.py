@@ -27,8 +27,10 @@ def index_page(page):
     
     for project in project_list():
         if 'projects' not in page:
-	    project = 'projects/' + project
-        body += '* [' + project + '](' + project + ')\n\n'
+	    projectURL = 'projects/' + project
+	else:
+	    projectURL = project
+        body += '* [' + project.replace('_', ' ') + '](' + projectURL + ')\n\n'
 
     return render_template('master.mak', body=markdownGen.convert(body), name="mako")
 
