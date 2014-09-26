@@ -19,11 +19,18 @@ def index_page(page):
     """
     Render our index page
     """
-    page = None
+    body = None
     with open(base_dir + "index.md", "r") as indexMD:
-        page = indexMD.read()
+        body = indexMD.read()
 
-    return markdownGen.convert(page)
+    body += "\n\n##Project List\n\n"
+    
+    for project in project_list():
+        if 'projects' not in page:
+	    project = 'projects/' + project
+        body += '* [' + project + '](' + project + ')\n\n'
+
+    return render_template('master.mak', body=markdownGen.convert(body), name="mako")
 
 @app.route('/projects/<name>')
 def project_page(name = "test"):
@@ -41,4 +48,17 @@ def project_page(name = "test"):
     except:
         page = "#404"
 
-    return markdownGen.convert(page)
+    return render_template('master.mak', body=markdownGen.convert(page), name="mako")
+
+def project_list():
+    """
+    Returns a list of project names as strings
+    """
+    project_list = []
+
+    for dirpath, dirnames, files in os.walk(base_dir + "projects/"):
+        for fname in files:
+	    if fname.endswith('.md'):
+	        project_list.append(fname.rstrip('.md'))
+
+    return project_list
