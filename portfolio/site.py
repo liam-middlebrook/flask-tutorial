@@ -64,6 +64,6 @@ def project_list():
     for dirpath, dirnames, files in os.walk(base_dir + "projects/"):
         for fname in files:
 	    if fname.endswith('.md'):
-	        project_list.append(fname.rstrip('.md'))
+	        project_list.append(os.path.splitext(fname)[0])
 
     return project_list

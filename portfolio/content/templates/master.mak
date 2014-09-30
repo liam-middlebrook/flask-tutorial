@@ -8,7 +8,7 @@
         ${body}
 	<footer>
 	    <a href="/">Home</a> <br/>
-	    &copy; 2014 Liam Middlebrook <br/> 
+	    &copy; 2014 Liam Middlebrook <a href="https://github.com/liam-middlebrook/portfolio">Fork Me on GitHub!</a><br/> 
 	    <em>This website was generated using Python with Flask</em>
 	</footer>
     </body>
