@@ -10,7 +10,7 @@ app.template_folder = "content/templates"
 mako = MakoTemplates(app)
 base_dir = os.path.split(__file__)[0] + '/content/'
 
-markdownGen = Markdown()
+markdownGen = Markdown(extras=['tables'])
 
 @app.route('/<page>')
 @app.route('/', defaults=dict(page="home"))
