@@ -15,7 +15,7 @@ markdownGen = Markdown(extras=['tables', 'core-friendly',
 
 @app.route('/<page>')
 @app.route('/', defaults=dict(page="home"))
-@app.route('/projects/', defaults=dict(page="projects"))
+@app.route('/tutorials/', defaults=dict(page="tutorials"))
 def index_page(page):
     """
     Render our index page
@@ -25,46 +25,44 @@ def index_page(page):
         body = indexMD.read()
 
     
-    # Append projects in markdown
+    # Append tutorials in markdown
 
-    body += "\n\n##Project List\n\n"
-
-    for project in project_list():
-        if 'projects' not in page:
-	    projectURL = 'projects/' + project
+    for tutorial in tutorial_list():
+        if 'tutorials' not in page:
+	    tutorialURL = 'tutorials/' + tutorial
 	else:
-	    projectURL = project
-        body += '* [' + project.replace('_', ' ') + '](' + projectURL + ')\n\n'
+	    tutorialURL = tutorial
+        body += '* [' + tutorial.replace('_', ' ') + '](' + tutorialURL + ')\n\n'
 
     return render_template('master.mak', body=markdownGen.convert(body), name="mako")
 
-@app.route('/projects/<name>')
-def project_page(name = "test"):
+@app.route('/tutorials/<name>')
+def tutorial_page(name = "test"):
     """
-    Render a page for a specific project
-    If that project doesn't exist
+    Render a page for a specific tutorial
+    If that tutorial doesn't exist
     serve a 404 page instead
     """
 
     name = name.lower().replace(' ','_')
 
     try:
-        with open(base_dir + "projects/" + name + ".md") as projectMD:
-            page = projectMD.read()
+        with open(base_dir + "tutorials/" + name + ".md") as tutorialMD:
+            page = tutorialMD.read()
     except:
         page = "#404"
 
     return render_template('master.mak', body=markdownGen.convert(page), name="mako")
 
-def project_list():
+def tutorial_list():
     """
-    Returns a list of project names as strings
+    Returns a list of tutorial names as strings
     """
-    project_list = []
+    tutorial_list = []
 
-    for dirpath, dirnames, files in os.walk(base_dir + "projects/"):
+    for dirpath, dirnames, files in os.walk(base_dir + "tutorials/"):
         for fname in files:
 	    if fname.endswith('.md'):
-	        project_list.append(os.path.splitext(fname)[0])
+	        tutorial_list.append(os.path.splitext(fname)[0])
 
-    return project_list
+    return tutorial_list
